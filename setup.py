@@ -24,7 +24,7 @@ def read_file(file_name):
 # Load library version
 sys.path.insert(0, os.path.abspath("lib"))
 
-from glow.release import __author__, __email__, __version__  # isort:skip
+# from glow.release import __author__, __email__, __version__  # isort:skip
 
 
 def get_dynamic_setup_params():
@@ -77,11 +77,11 @@ EXTRAS_REQUIRE["dev"] = (
 
 static_setup_params = dict(
     name="glow",
-    version=__version__,
+    version="0.0.1",
     description=("A Flask Webapp"),
     keywords="python",
-    author=__author__,
-    author_email=__email__,
+    author="__author__",
+    author_email="__email__",
     url="",
     package_dir={"": "lib"},
     packages=find_packages("lib"),
