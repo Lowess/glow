@@ -82,6 +82,7 @@ def create_app():
     def cleanup():
         for gstrip in STRIPS:
             gstrip.colorize(palette["none"])
+            gstrip.render()
 
     atexit.register(cleanup)
 
