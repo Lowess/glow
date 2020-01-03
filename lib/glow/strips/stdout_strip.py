@@ -102,9 +102,8 @@ class StdoutPixelStrip(object):
         return self._leds[n]
 
     def getPixelColorRGB(self, n):
-        def color(led):
-            setattr(color, "r", led >> 16 & 0xFF)
-            setattr(color, "g", led >> 8 & 0xFF)
-            setattr(color, "b", led & 0xFF)
-
-        return color(self._leds[n])
+        c = lambda: None  # noqa:E731
+        setattr(c, "r", self._leds[n] >> 16 & 0xFF)
+        setattr(c, "g", self._leds[n] >> 8 & 0xFF)
+        setattr(c, "b", self._leds[n] & 0xFF)
+        return c

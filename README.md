@@ -1,4 +1,4 @@
-# :trident: glow
+# :sparkles: glow
 
 [![Build Status](https://cloud.drone.io/api/badges/Lowess/glow/status.svg)](https://cloud.drone.io/Lowess/karrot)
 [![Coverage Status](https://coveralls.io/repos/github/Lowess/glow/badge.svg?branch=master)](https://coveralls.io/github/Lowess/karrot?branch=master)

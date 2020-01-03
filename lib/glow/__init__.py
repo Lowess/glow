@@ -3,18 +3,22 @@
 
 import os
 import logging
+from time import sleep
 from logging.config import dictConfig
 
 from flask import Flask, url_for, redirect, render_template, send_from_directory
 from dynaconf import settings
 
-from glow.colors import Color
-from glow.displays import GlowStrip
+from glow.colors import palette
+from glow.strips import GlowStrip, StripFactory
+from glow.effects import EffectFactory
 from glow.logging_config import DEFAULT_LOGGING_CONFIG
 
 # Initialize logging
 dictConfig(DEFAULT_LOGGING_CONFIG)
 logger = logging.getLogger()
+
+STRIPS = []
 
 
 def create_app():
@@ -28,30 +32,40 @@ def create_app():
 
     # Switch to [glow] namespace to parse config
     settings.setenv("glow")
-    STRIPS = []
+    # effect = BicolorEffect(
+    #     name="redgreen", colors=[colors.indigo, colors.lime, colors.salmon]
+    # )
 
     for strip in settings.STRIPS:
-        gs = GlowStrip(size=strip["size"])
-        gs.render()
-        STRIPS.append(gs)
+        strip = StripFactory.create(size=strip["size"])
+        effect_params = {
+            "colors": [palette["indigo"], palette["lime"], palette["salmon"]]
+        }
+        effect = EffectFactory.create(name="bicolor", **effect_params)
+        gstrip = GlowStrip(strip=strip, effect=effect)
+        STRIPS.append(gstrip)
+
+        for _ in range(4):
+            gstrip.render()
+            sleep(1)
 
     settings.setenv()
     logger.info(STRIPS)
 
-    for strip in STRIPS:
-        strip.colorize(Color(255, 0, 0))
-        strip.render()
+    # for gstrip in STRIPS:
+    #     gstrip.colorize(colors=[Color(255, 0, 0)])
+    #     gstrip.render()
     ################################################################################
     # Blueprints registration
     ################################################################################
 
-    from glow.displays import display
+    from glow.glow import glow
 
-    app.register_blueprint(display)
+    app.register_blueprint(glow)
 
     @app.route("/", methods=["GET"])
     def index(error=None):
-        return redirect(url_for("display.show"))
+        return redirect(url_for("glow.show"))
 
     @app.route("/favicon.ico")
     def favicon():

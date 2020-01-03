@@ -13,19 +13,21 @@ from datetime import datetime
 from flask import Blueprint, jsonify
 from flask import current_app as app
 
+from glow import STRIPS
+
 # Define a blueprint
-display = Blueprint("display", __name__, url_prefix="/display")
+glow = Blueprint("glow", __name__, url_prefix="/glow")
 
 
-@display.route("", methods=["GET"])
+@glow.route("", methods=["GET"])
 def show():
     """
         Returns a simple JSON string when the application is healthy.
 
         :returns: json -- A JSON with the following format:
         ``{"status": "success",
-           "msg": "Glow is healthy",
+           "msg": "Glow is glowing",
            "time": "<datetime.now()>"}``
     """
-    app.logger.debug("Display")
-    return jsonify(status="success", msg="Glow is healthy", time=str(datetime.now()))
+    app.logger.debug(STRIPS)
+    return jsonify(status="success", msg="Glow is glowing", time=str(datetime.now()))

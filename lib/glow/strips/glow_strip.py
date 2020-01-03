@@ -1,23 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from dynaconf import settings
-
-from glow.strips import PixelStrip
-
 
 class GlowStrip:
-    def __init__(self, size, effect=None):
-        pin = settings.GLOW_PIN
-        freq_hz = settings.GLOW_FREQ_HZ
-        dma = settings.GLOW_DMA
-        invert = settings.GLOW_INVERT
-        brightness = settings.GLOW_BRIGHTNESS
-        channel = settings.GLOW_CHANNEL
-
+    def __init__(self, strip, effect=None):
         # Create NeoPixel object with appropriate configuration.
         # Intialize the library (must be called once before other functions).
-        self._strip = PixelStrip(size, pin, freq_hz, dma, invert, brightness, channel)
+        self._strip = strip
         self._strip.begin()
         self._effect = effect
 
@@ -27,9 +16,19 @@ class GlowStrip:
     def __str__(self):
         return "%s" % self._strip.show()
 
-    def colorize(self, color):
-        for i in range(self._strip.numPixels()):
+    def __len__(self):
+        return self._strip.numPixels()
+
+    @property
+    def strip(self):
+        return self._strip
+
+    def colorize(self, color, start=0, stop=None):
+        if stop is None:
+            stop = len(self)
+        for i in range(int(start), int(stop)):
             self._strip.setPixelColor(i, color)
 
     def render(self):
+        self._effect.apply(self)
         print(self._strip.show())
