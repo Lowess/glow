@@ -4,6 +4,7 @@
 from glow.colors.color import Color
 
 palette = {
+    "none": Color(0, 0, 0),
     "aliceblue": Color(240, 248, 255),
     "antiquewhite": Color(250, 235, 215),
     "aqua": Color(0, 255, 255),
