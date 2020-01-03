@@ -30,4 +30,8 @@ def show():
            "time": "<datetime.now()>"}``
     """
     app.logger.debug(STRIPS)
+
+    for gstrip in STRIPS:
+        gstrip.render()
+
     return jsonify(status="success", msg="Glow is glowing", time=str(datetime.now()))

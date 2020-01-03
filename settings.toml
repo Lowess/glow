@@ -8,6 +8,11 @@ glow_invert = false # True to invert the signal (when using NPN transistor level
 glow_channel = 0 # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
 [glow]
-strips = [
-  { name = "box1", title = "Coffre du haut", size = 74 }
-]
+  [glow.strips.box1]
+  title = "Box1"
+  start = 0
+  stop = 74
+
+  [glow.strips.box1.effects]
+  effect = "bicolor"
+  colors = ["red", "green", "blue"]

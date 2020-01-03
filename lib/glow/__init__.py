@@ -3,7 +3,6 @@
 
 import os
 import logging
-from time import sleep
 from logging.config import dictConfig
 
 from flask import Flask, url_for, redirect, render_template, send_from_directory
@@ -32,29 +31,19 @@ def create_app():
 
     # Switch to [glow] namespace to parse config
     settings.setenv("glow")
-    # effect = BicolorEffect(
-    #     name="redgreen", colors=[colors.indigo, colors.lime, colors.salmon]
-    # )
 
-    for strip in settings.STRIPS:
-        strip = StripFactory.create(size=strip["size"])
-        effect_params = {
-            "colors": [palette["indigo"], palette["lime"], palette["salmon"]]
-        }
-        effect = EffectFactory.create(name="bicolor", **effect_params)
-        gstrip = GlowStrip(strip=strip, effect=effect)
+    for _, strip in settings.STRIPS.items():
+        neopixel = StripFactory.create(size=strip["stop"] - strip["start"])
+
+        effect_params = {"colors": [palette[color] for color in strip.effects.colors]}
+        effect = EffectFactory.create(name=strip.effects.effect, **effect_params)
+        gstrip = GlowStrip(
+            strip=neopixel, start=strip["start"], stop=strip["stop"], effect=effect
+        )
         STRIPS.append(gstrip)
-
-        for _ in range(4):
-            gstrip.render()
-            sleep(1)
-
     settings.setenv()
     logger.info(STRIPS)
 
-    # for gstrip in STRIPS:
-    #     gstrip.colorize(colors=[Color(255, 0, 0)])
-    #     gstrip.render()
     ################################################################################
     # Blueprints registration
     ################################################################################
