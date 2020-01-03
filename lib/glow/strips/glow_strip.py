@@ -3,6 +3,8 @@
 
 import logging
 
+from glow.colors import palette
+
 logger = logging.getLogger()
 
 
@@ -38,6 +40,11 @@ class GlowStrip:
     @property
     def stop(self):
         return self._stop
+
+    def off(self):
+        for i in range(int(self._start), int(self._stop)):
+            self._strip.setPixelColor(i, palette["none"])
+        self._strip.show()
 
     def colorize(self, color, start=None, stop=None):
         if start is None:
