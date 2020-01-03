@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 import os
 import atexit
 import logging
+from time import sleep
 from logging.config import dictConfig
 
 from flask import Flask, url_for, redirect, render_template, send_from_directory
@@ -83,6 +83,7 @@ def create_app():
         for gstrip in STRIPS:
             gstrip.colorize(palette["none"])
             gstrip.render()
+            sleep(1)
 
     atexit.register(cleanup)
 
