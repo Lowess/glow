@@ -27,5 +27,5 @@ class BicolorEffect(Effect):
         gen = self._generator
         for i in range(2):
             color = next(gen)
-            logger.info(f"{i * pivot} - {i+1 *pivot} {color}")
+            logger.info("{} - {} {}".format(i * pivot, i + 1 * pivot, color))
             gstrip.colorize(color=color, start=(i * pivot), stop=(i + 1) * pivot)
