@@ -32,6 +32,7 @@ def show():
     app.logger.debug(STRIPS)
 
     for gstrip in STRIPS:
+        app.logger.debug("Rendering {}".format(gstrip))
         gstrip.render()
 
     return jsonify(status="success", msg="Glow is glowing", time=str(datetime.now()))

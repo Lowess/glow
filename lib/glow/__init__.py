@@ -29,18 +29,23 @@ def create_app():
 
     logger.info("Glow initialized with: {}".format(settings.to_dict()))
 
+    # Create the led strip
+    neopixel = StripFactory.create(size=settings.GLOW_SIZE)
+
     # Switch to [glow] namespace to parse config
     settings.setenv("glow")
 
     for _, strip in settings.STRIPS.items():
-        neopixel = StripFactory.create(size=strip["stop"] - strip["start"])
-
+        # Create effects
         effect_params = {"colors": [palette[color] for color in strip.effects.colors]}
-        effect = EffectFactory.create(name=strip.effects.effect, **effect_params)
+        effect = EffectFactory.create(name="bicolor", **effect_params)
+
         gstrip = GlowStrip(
             strip=neopixel, start=strip["start"], stop=strip["stop"], effect=effect
         )
+        gstrip.render()
         STRIPS.append(gstrip)
+
     settings.setenv()
     logger.info(STRIPS)
 

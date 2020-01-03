@@ -1,5 +1,5 @@
-
 [default]
+glow_size = 74
 glow_pin = 10 # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
 glow_freq_hz = 800000 # LED signal frequency in hertz (usually 800khz)
 glow_dma = 10 # DMA channel to use for generating signal (try 10)
@@ -19,9 +19,9 @@ glow_channel = 0 # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
   [glow.strips.box2]
   title = "Box2"
-  start = 37
+  start = 36
   stop = 74
 
   [glow.strips.box2.effects]
   effect = "bicolor"
-  colors = ["red", "green"]
+  colors = ["green"]
