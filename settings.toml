@@ -11,8 +11,17 @@ glow_channel = 0 # set to '1' for GPIOs 13, 19, 41, 45 or 53
   [glow.strips.box1]
   title = "Box1"
   start = 0
-  stop = 74
+  stop = 36
 
   [glow.strips.box1.effects]
   effect = "bicolor"
-  colors = ["red", "green", "blue"]
+  colors = ["yellow", "blue"]
+
+  [glow.strips.box2]
+  title = "Box2"
+  start = 37
+  stop = 74
+
+  [glow.strips.box2.effects]
+  effect = "bicolor"
+  colors = ["red", "green"]
