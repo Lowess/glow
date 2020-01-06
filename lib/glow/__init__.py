@@ -34,29 +34,29 @@ def create_app():
     # Create the led strip
     neopixel = StripFactory.create(size=settings.NEOPIXEL_SIZE)
 
-    # Switch to [glow] namespace to parse config
-    settings.setenv("glow")
+    for strip_setting in settings.GLOW["strips"]:
+        logger.debug("Initializig Glow strip with: {}".format(strip_setting))
 
-    for strip_setting in settings.STRIPS:
-        print(strip_setting)
         # Build the list of effects based on provided settings
         effects = []
         for effect in strip_setting["effects"]:
-            effect_params = {"colors": [palette[color] for color in effect["colors"]]}
-            effect = EffectFactory.create(name="bicolor", **effect_params)
+            effect = EffectFactory.create(**effect)
             effects.append(effect)
 
         gstrip = GlowStrip(
             strip=neopixel,
             start=strip_setting["start"],
             stop=strip_setting["stop"],
-            effect=effects[0],
+            effects=effects,
         )
-        gstrip.render()
+
+        colors = [palette[color] for color in strip_setting["colors"]]
+        gstrip.paint(colors)
+
         STRIPS.append(gstrip)
 
-    settings.setenv()
-    logger.info(STRIPS)
+    for gstrip in STRIPS:
+        logger.info(gstrip)
 
     ################################################################################
     # Blueprints registration

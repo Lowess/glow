@@ -43,12 +43,17 @@ class StdoutPixelStrip(object):
         # Initialize the channel in use
         self._channel = channel
 
+    def __repr__(self):
+        return "<%r>" % self
+
+    def __str__(self):
+        return self.show()
+
     def _cleanup(self):
         pass
 
     def setGamma(self, gamma):
-        if type(gamma) is list and len(gamma) == 256:
-            pass
+        pass
 
     def begin(self):
         """Initialize library, must be called once before other functions are
@@ -62,7 +67,7 @@ class StdoutPixelStrip(object):
 
         for i, _ in enumerate(self._leds):
             c = self.getPixelColorRGB(i)
-            display.append(color("{idx:<3}".format(idx=i), bg=(c.r, c.g, c.b)))
+            display.append(color("▢".format(idx=i), bg=(c.r, c.g, c.b)))
 
         return "|" + "|".join(display) + "|"
 

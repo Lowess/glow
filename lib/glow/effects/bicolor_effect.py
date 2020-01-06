@@ -13,24 +13,22 @@ class BicolorEffect(Effect):
     def __init__(self, name: str, colors: list):
         super().__init__(name)
         self._colors = colors
-        self._generator = self._get_color()
+        self._picker = self._pick()
 
-    def _get_color(self):
+    def _pick(self):
         for color in cycle(self._colors):
             yield color
 
     def _get_pivot(self, length, depth=1):
         return length / 2
 
-    def apply(self, gstrip):
-        pivot = self._get_pivot(len(gstrip))
-        logger.info("Pivot is set to {}".format(pivot))
-        gen = self._generator
+    def colorize(self) -> None:
+        pivot = self._get_pivot(len(self._pixels))
+        logger.debug("Pivot is set to {}".format(pivot))
+
         for i in range(2):
-            color = next(gen)
-            color_start = (i * pivot) + gstrip.start
-            color_stop = ((i + 1) * pivot) + gstrip.start
-            logger.info(
-                "start={} - stop={} color={}".format(color_start, color_stop, color)
-            )
-            gstrip.colorize(color=color, start=color_start, stop=color_stop)
+            color = next(self._picker)
+            color_start = int(i * pivot)
+            color_stop = int((i + 1) * pivot)
+            for j in range(color_start, color_stop):
+                self._pixels[j] = color

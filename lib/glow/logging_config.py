@@ -6,7 +6,12 @@ import logging
 DEFAULT_LOGGING_CONFIG = dict(
     version=1,
     formatters={
-        "default": {"format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"}
+        "default": {
+            "format": (
+                "%(asctime)s [%(levelname)5s] %(message)s ",
+                "(%(filename)s:%(lineno)s)",
+            )
+        }
     },
     handlers={
         "default": {
