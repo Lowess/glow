@@ -52,22 +52,27 @@ class GlowStrip:
 
         logger.info("Colorize from {} -> {}".format(start, stop))
         for i in range(int(start), int(stop)):
-            self._strip.setPixelColor(i, color)
+            self.strip.setPixelColor(i, color)
 
     def paint(self, pixels):
         for i, pixel in enumerate(pixels):
             # logger.info("Painting [{}] in {}".format(i, pixel))
             self._strip.setPixelColor(self.start + i, pixel)
 
+    def dim(self, brightness: int) -> None:
+        self._strip.setBrightness(brightness)
+
     def render(self):
         new_pixels = []
+        new_brightness = None
+
         for effect in self._effects:
 
             pixels = self._strip.getPixels()
             sub_pixels = list(pixels[self._slice])
             logger.info("Subpixels {}".format(sub_pixels))
 
-            new_sub_pixels = effect.apply(sub_pixels)
+            new_sub_pixels, new_brightness = effect.apply(sub_pixels)
 
             logger.info(
                 "Applied {} effect (on {}) -> {}".format(
@@ -76,6 +81,14 @@ class GlowStrip:
             )
             new_pixels += new_sub_pixels
 
-        logger.info("New Pixels ({}) ->> {}".format(len(new_pixels), new_pixels))
+        logger.debug(
+            "New Pixels (len[{}] - bright[{}]) ->> {}".format(
+                len(new_pixels), new_brightness, new_pixels
+            )
+        )
+
+        if new_brightness is not None:
+            self.dim(brightness=new_brightness)
+
         self.paint(new_pixels)
         self._strip.show()

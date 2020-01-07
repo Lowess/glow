@@ -32,13 +32,12 @@ def show():
     # app.logger.debug(STRIPS)
 
     strips = []
+
     for gstrip in STRIPS:
         gstrip.render()
         if len(strips) == 0:
             strips.append(gstrip.strip.getPixels())
         app.logger.debug(gstrip)
-
-    app.logger.debug(strips)
 
     return jsonify(
         status="success", msg="Glow is glowing", time=str(datetime.now()), strips=strips

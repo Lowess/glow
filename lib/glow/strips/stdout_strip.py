@@ -84,7 +84,7 @@ class StdoutPixelStrip(object):
         self._leds[n] = Color(red, green, blue)
 
     def getBrightness(self):
-        pass
+        return 255
 
     def setBrightness(self, brightness):
         """Scale each LED in the buffer by the provided brightness.  A brightness

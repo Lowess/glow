@@ -3,5 +3,6 @@
 
 from glow.effects.factory import EffectFactory
 from glow.effects.bicolor_effect import BicolorEffect
+from glow.effects.colored_wheel_effect import ColoredWheelEffect
 
-__all__ = ["BicolorEffect", "EffectFactory"]
+__all__ = ["BicolorEffect", "EffectFactory", "ColoredWheelEffect"]

@@ -13,24 +13,29 @@ start = 0
 stop = 6
 colors = ["white", "black", "white", "black", "white", "black"]
 
+  # [[default.glow.strips.effects]]
+  # name = "bicolor"
+  # colors = ["yellow", "blue"]
+
   [[default.glow.strips.effects]]
-  name = "bicolor"
-  colors = ["yellow", "blue"]
+  name = "wheel"
+  # colors = ["green", "red"]
+  clockwise = false
 
   # [[default.glow.strips.effects]]
-  # name = "wheel"
+  # name = "dim"
 
 [[default.glow.strips]]
 title = "Box2"
 start = 6
 stop = 12
 colors = ["red", "red", "blue", "blue", "green", "green"]
-  [[default.glow.strips.effects]]
-  name = "wheel"
-  offset = 2
   # [[default.glow.strips.effects]]
-  # name = "bicolor"
-  # colors = ["green", "red"]
+  # name = "wheel"
+  # offset = 2
+  [[default.glow.strips.effects]]
+  name = "colored_wheel"
+  colors = ["green", "red"]
 
 ### Production
 [production]
@@ -49,5 +54,9 @@ title = "Box2"
 start = 36
 stop = 74
   [[production.glow.strips.effects]]
+  name = "wheel"
+  offset = 2
+
+  [[production.glow.strips.effects]]
   name = "bicolor"
-  colors = ["green"]
+  colors = ["green", "none"]

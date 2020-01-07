@@ -15,6 +15,7 @@ class Effect(metaclass=ABCMeta):
         self._name = name
         self._pixels = None
         self._offsets = None
+        self._brightness = None
 
     def _initialize(self, pixels: PixelListType) -> None:
         self._pixels = list(pixels)
@@ -33,8 +34,8 @@ class Effect(metaclass=ABCMeta):
     def colorize(self) -> None:
         pass
 
-    def dim(self) -> None:
-        pass
+    def dim(self) -> int:
+        return self._brightness
 
     def offset(self) -> None:
         pass
@@ -44,7 +45,7 @@ class Effect(metaclass=ABCMeta):
             self._initialize(pixels)
 
         self.colorize()
-        self.dim()
+        brightness = self.dim()
         self.offset()
 
         logger.info("pixels={}".format(self._pixels))
@@ -56,4 +57,4 @@ class Effect(metaclass=ABCMeta):
             new_pixels.append(self._pixels[offset])
 
         logger.info("New pixels after effect apply: {}".format(new_pixels))
-        return new_pixels
+        return (new_pixels, brightness)

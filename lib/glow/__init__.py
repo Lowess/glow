@@ -56,7 +56,7 @@ def create_app():
         STRIPS.append(gstrip)
 
     for gstrip in STRIPS:
-        logger.info(gstrip)
+        logger.debug(len(gstrip))
 
     ################################################################################
     # Blueprints registration
