@@ -36,3 +36,30 @@ colors = ["red", "red", "blue", "blue", "green", "green"]
   [[default.glow.strips.effects]]
   name = "colored_wheel"
   colors = ["green", "red"]
+
+#######################################################################################
+### Production
+#######################################################################################
+
+[production]
+neopixel_size = 74
+
+[[production.glow.strips]]
+title = "Box1"
+start = 0
+stop = 37
+colors = ["none"]
+
+  [[production.glow.strips.effects]]
+  name = "colored_wheel"
+  colors = ["yellow", "green"]
+
+[[production.glow.strips]]
+title = "Box2"
+start = 37
+stop = 74
+colors = ["none"]
+
+  [[production.glow.strips.effects]]
+  name = "colored_wheel"
+  colors = ["green", "yellow"]
