@@ -45,6 +45,7 @@ neopixel_size = 74
 title = "Box1"
 start = 0
 stop = 36
+colors = []
   [[production.glow.strips.effects]]
   name = "bicolor"
   colors = ["yellow", "blue"]
