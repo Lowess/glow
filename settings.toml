@@ -48,11 +48,11 @@ neopixel_size = 74
 title = "Box1"
 start = 0
 stop = 37
-colors = ["none"]
+colors = ["green", "yellow", "red"]
 
   [[production.glow.strips.effects]]
-  name = "colored_wheel"
-  colors = ["yellow", "green"]
+  name = "wheel"
+  offset=3
 
 [[production.glow.strips]]
 title = "Box2"
