@@ -29,7 +29,9 @@ class BreathDimEffect(DimEffect):
             if new_brightness < 0 or new_brightness > 255:
                 self._clockwise = not self._clockwise
 
-        self._brightness = new_brightness % 255
+            new_brightness = self._brightness + ((2 * self._step) * self._clockwise)
+        else:
+            self._brightness = new_brightness % 255
 
     def dim(self) -> int:
         self._breath()
