@@ -12,6 +12,3 @@ class DimEffect(Effect):
     def __init__(self, name: str, brightness=127):
         super().__init__(name)
         self._brightness = brightness
-
-    def dim(self) -> None:
-        return self._brightness

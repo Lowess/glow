@@ -65,4 +65,4 @@ colors = ["none"]
   colors = ["green", "yellow"]
 
   [[production.glow.strips.effects]]
-  name = "dim"
+  name = "breath_dim"

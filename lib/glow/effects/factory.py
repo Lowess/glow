@@ -7,6 +7,7 @@ from glow.colors import palette
 from glow.effects.dim_effect import DimEffect
 from glow.effects.wheel_effect import WheelEffect
 from glow.effects.bicolor_effect import BicolorEffect
+from glow.effects.breath_dim_effect import BreathDimEffect
 from glow.effects.colored_wheel_effect import ColoredWheelEffect
 
 logger = logging.getLogger()
@@ -37,6 +38,14 @@ class EffectFactory:
 
         if name.lower() == "dim":
             effect = DimEffect(name, brightness=kwargs.get("brightness", 127))
+
+        if name.lower() == "breath_dim":
+            effect = BreathDimEffect(
+                name,
+                brightness=kwargs.get("brightness", 127),
+                step=kwargs.get("step", 10),
+                clockwise=kwargs.get("clockwise", True),
+            )
 
         if name.lower() == "colored_wheel":
             colors = []
