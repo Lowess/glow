@@ -27,9 +27,11 @@ class BreathDimEffect(DimEffect):
         # If smooth play tick tock effect with clockwise
         if self._smooth:
             if new_brightness < 0 or new_brightness > 255:
+                logger.debug("Smooth mode - swapping clockwise")
                 self._clockwise = not self._clockwise
 
             self._brightness = self._brightness + ((2 * self._step) * self._clockwise)
+
         else:
             self._brightness = new_brightness % 255
 
