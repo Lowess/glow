@@ -63,3 +63,6 @@ colors = ["none"]
   [[production.glow.strips.effects]]
   name = "colored_wheel"
   colors = ["green", "yellow"]
+
+  [[production.glow.strips.effects]]
+  name = "dim"
