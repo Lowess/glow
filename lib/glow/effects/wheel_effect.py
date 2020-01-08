@@ -5,19 +5,20 @@ import logging
 
 from glow.effects.effect import Effect
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 class WheelEffect(Effect):
     def __init__(self, name: str, offset=1, clockwise=True):
         super().__init__(name)
         self._offset = offset
-        self._position = 0
-        self._clockwise = -1 if clockwise else +1
+        self._clockwise = clockwise
 
     def offset(self) -> None:
-        for i in range(len(self._offsets)):
-            self._offsets[i] = (
-                self._offsets[i] + (self._clockwise * self._offset)
-            ) % len(self._offsets)
-        logger.info("New offsets {}".format(self._offsets))
+        for _ in range(self._offset):
+            if self._clockwise:
+                self._offsets.insert(0, self._offsets.pop(len(self._offsets) - 1))
+            else:
+                self._offsets.insert(len(self._offsets) - 1, self._offsets.pop(0))
+
+        logger.debug("New offsets {}".format(self._offsets))

@@ -4,16 +4,16 @@
 import logging
 
 from glow.effects.wheel_effect import WheelEffect
-from glow.effects.bicolor_effect import BicolorEffect
+from glow.effects.ncolor_effect import NColorEffect
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
-class ColoredWheelEffect(BicolorEffect, WheelEffect):
+class ColoredWheelEffect(NColorEffect, WheelEffect):
     """
       TODO: Color -> Mix of both
     """
 
-    def __init__(self, name: str, colors: list, offset=1):
+    def __init__(self, name: str, colors: list, ncolors: int = 2, offset=1):
         WheelEffect.__init__(self, name=name, offset=offset)
-        BicolorEffect.__init__(self, name=name, colors=colors)
+        NColorEffect.__init__(self, name=name, colors=colors, ncolors=ncolors)

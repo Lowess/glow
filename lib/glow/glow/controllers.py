@@ -11,7 +11,6 @@ from datetime import datetime
 
 # Import flask dependencies
 from flask import Blueprint, jsonify
-from flask import current_app as app
 
 from glow import STRIPS
 
@@ -37,7 +36,6 @@ def show():
         gstrip.render()
         if len(strips) == 0:
             strips.append(gstrip.strip.getPixels())
-        app.logger.debug(gstrip)
 
     return jsonify(
         status="success", msg="Glow is glowing", time=str(datetime.now()), strips=strips

@@ -1,0 +1,40 @@
+/* When plugs are switched off */
+[data-theme="default"] {
+  --MENU-BG-color: #f8f8f8;
+  --CONTENT-BG-color: #fff;
+
+  --PLUG-1-BG-color:#FFFFFF; /* Color for button's background */
+  --PLUG-1-HL-color:#EAC435; /* Color for button's border */
+  --PLUG-1-FG-color:#EEEEEE; /* Color for button's text */
+
+  --PLUG-2-BG-color:#FFFFFF; /* Color for button's background */
+  --PLUG-2-HL-color:#E40066; /* Color for button's border */
+  --PLUG-2-FG-color:#EEEEEE; /* Color for button's text */
+
+  --PLUG-3-BG-color:#FFFFFF; /* Color for button's background */
+  --PLUG-3-HL-color:#5553B7; /* Color for button's border */
+  --PLUG-3-FG-color:#EEEEEE; /* Color for button's text */
+
+  --PLUG-4-BG-color:#FFFFFF; /* Color for button's background */
+  --PLUG-4-HL-color:#03CEA4; /* Color for button's border */
+  --PLUG-4-FG-color:#EEEEEE; /* Color for button's text */
+}
+
+/* When plugs are switched on */
+[data-theme="default"] [data-on="true"] {
+  --PLUG-1-BG-color:#EAC435; /* Color for button's background */
+  --PLUG-1-HL-color:#FB4D3D; /* Color for button's border */
+  --PLUG-1-FG-color:#FB4D3D; /* Color for button's text */
+
+  --PLUG-2-BG-color:#E40066; /* Color for button's background */
+  --PLUG-2-HL-color:#FB4D3D; /* Color for button's border */
+  --PLUG-2-FG-color:#FB4D3D; /* Color for button's text */
+
+  --PLUG-3-BG-color:#5553B7; /* Color for button's background */
+  --PLUG-3-HL-color:#FB4D3D; /* Color for button's border */
+  --PLUG-3-FG-color:#FB4D3D; /* Color for button's text */
+
+  --PLUG-4-BG-color:#03CEA4; /* Color for button's background */
+  --PLUG-4-HL-color:#FB4D3D; /* Color for button's border */
+  --PLUG-4-FG-color:#FB4D3D; /* Color for button's text */
+}

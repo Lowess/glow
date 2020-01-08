@@ -1,0 +1,33 @@
+[data-theme="dark"] [data-on="true"] {
+  --MENU-BG-color: #222222;
+  --CONTENT-BG-color: #f8f8f8;
+
+  --PLUG-1-BG-color:#EAC435; /* Color for button's background */
+  --PLUG-1-HL-color:#f8f8f8; /* Color for button's border */
+  --PLUG-1-FG-color:#f8f8f8; /* Color for button's text */
+
+  --PLUG-2-BG-color:#E40066; /* Color for button's background */
+  --PLUG-2-HL-color:#323232; /* Color for button's border */
+  --PLUG-2-FG-color:#323232; /* Color for button's text */
+
+  --PLUG-3-BG-color:#5553B7; /* Color for button's background */
+  --PLUG-3-HL-color:#323232; /* Color for button's border */
+  --PLUG-3-FG-color:#323232; /* Color for button's text */
+
+  --PLUG-4-BG-color:#03CEA4; /* Color for button's background */
+  --PLUG-4-HL-color:#0f0d0d; /* Color for button's border */
+  --PLUG-4-FG-color:#323232; /* Color for button's text */
+}
+
+.navbar[data-theme="dark"] {
+  color: white;
+}
+
+body[data-theme="dark"] {
+  background-color: #323232;
+  color: white;
+}
+
+footer[data-theme="dark"] {
+  background-color: #222;
+}

@@ -1,0 +1,140 @@
+/***************************************************************************
+ *** Themes
+****************************************************************************/
+
+@import url("theme-default.css");
+@import url("theme-pastel.css");
+@import url("theme-dark.css");
+
+/***************************************************************************
+ *** Fonts and Main CSS
+****************************************************************************/
+
+@font-face {
+    font-family: KubeFont;
+    src: url("../fonts/gitchgitch.otf") format("opentype");
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.kubefont {
+    font-family: "KubeFont",Helvetica,Arial,sans-serif;
+}
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+    height: 100%;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+}
+
+footer {
+    background-color: var(--MENU-BG-color);
+}
+
+.navbar {
+  background-color: var(--MENU-BG-color);
+}
+
+.content {
+    padding: 15px;
+    background-color: var(--CONTENT-BG-color);
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+
+.btn-circle.btn-xl {
+    width: 100px;
+    height: 100px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 34px;
+    line-height: 1.33;
+}
+
+/***************************************************************************
+ ***  App CSS
+****************************************************************************/
+
+#plugs {
+  margin-bottom: 15px;
+  max-width: 400px;
+}
+
+#plugs button {
+  border-width: 3px;
+}
+
+#plugs #plug-1 {
+    animation: bounceIn 0.5s;
+    border-color: var(--PLUG-1-HL-color);
+    background-color: var(--PLUG-1-BG-color);
+}
+
+#plugs #plug-1 .plug-icon {
+    color: var(--PLUG-1-FG-color);
+}
+
+#plugs #plug-2 {
+    animation: bounceIn 0.5s;
+    animation-delay: 0.15s;
+    border-color: var(--PLUG-2-HL-color);
+    background-color: var(--PLUG-2-BG-color);
+}
+
+#plugs #plug-2 .plug-icon {
+    color: var(--PLUG-2-FG-color);
+}
+
+#plugs #plug-3 {
+    animation: bounceIn 0.5s;
+    animation-delay: 0.3s;
+    border-color: var(--PLUG-3-HL-color);
+    background-color: var(--PLUG-3-BG-color);
+}
+
+#plugs #plug-3 .plug-icon {
+    color: var(--PLUG-3-FG-color);
+}
+
+#plugs #plug-4 {
+    animation: bounceIn 0.5s;
+    animation-delay: 0.45s;
+    border-color: var(--PLUG-4-HL-color);
+    background-color: var(--PLUG-4-BG-color);
+}
+
+#plugs #plug-4 .plug-icon {
+    color: var(--PLUG-4-FG-color);
+}

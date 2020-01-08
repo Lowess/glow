@@ -1,5 +1,6 @@
 [default]
-neopixel_size = 12
+# Neopixel
+neopixel_size = 24
 neopixel_pin = 10 # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
 neopixel_freq_hz = 800000 # LED signal frequency in hertz (usually 800khz)
 neopixel_dma = 10 # DMA channel to use for generating signal (try 10)
@@ -7,35 +8,72 @@ neopixel_brightness = 255 # Set to 0 for darkest and 255 for brightest
 neopixel_invert = false # True to invert the signal (when using NPN transistor level shift)
 neopixel_channel = 0 # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
-[[default.glow.strips]]
-title = "Box1"
-start = 0
-stop = 6
-colors = ["white", "black", "white", "black", "white", "black"]
+## Logging
+[default.logging]
+version = 1
+disable_existing_loggers = false
 
-  # [[default.glow.strips.effects]]
-  # name = "bicolor"
-  # colors = ["yellow", "blue"]
+[default.logging.formatters]
+normal.format = "%(asctime)s [%(levelname)5s] (%(name)s:%(lineno)s) %(message)s"
+
+[default.logging.handlers]
+console.class = "logging.StreamHandler"
+console.formatter = "normal"
+console.level = "DEBUG"
+console.stream = "ext://sys.stdout"
+
+[default.logging.root]
+handlers = ["console"]
+level = "ERROR"
+
+[default.logging.loggers.glow]
+handlers = ["console"]
+level = "DEBUG"
+
+[default.glow.patterns.zen]
+
+
+
+[[default.glow.strips]]
+name = "Box1"
+start = 0
+stop = 24
+colors = ["green", "red", "yellow", "yellow", "red", "green"]
+fill = false
+delay = 0.3
 
   [[default.glow.strips.effects]]
-  name = "wheel"
-  # colors = ["green", "red"]
-  clockwise = false
+  name = "colored_mirror"
+  colors = ["blue", "orange"]
+
+  # converge = false
+  # ncolors = 3
+  # offset = 1
+
+  # [[default.glow.strips.effects]]
+  # name = "colored_mirror"
+  # colors = ["orange", "blue"]
+  # converge = false
+  # ncolors = 3
+  # offset = 1
 
   # [[default.glow.strips.effects]]
   # name = "dim"
 
-[[default.glow.strips]]
-title = "Box2"
-start = 6
-stop = 12
-colors = ["red", "red", "blue", "blue", "green", "green"]
-  # [[default.glow.strips.effects]]
-  # name = "wheel"
-  # offset = 2
-  [[default.glow.strips.effects]]
-  name = "colored_wheel"
-  colors = ["green", "red"]
+# [[default.glow.strips]]
+# name = "Box2"
+# start = 20
+# stop = 24
+# colors = ["red", "red", "blue", "blue", "green", "green"]
+#   # [[default.glow.strips.effects]]
+#   # name = "wheel"
+#   # offset = 1
+#   # clockwise = true
+
+#   [[default.glow.strips.effects]]
+#   name = "colored_wheel"
+#   colors = ["green", "red", "yellow"]
+
 
 #######################################################################################
 ### Production
@@ -43,27 +81,58 @@ colors = ["red", "red", "blue", "blue", "green", "green"]
 
 [production]
 neopixel_size = 74
+logging__loggers__glow__level = "WARNING"
 
 [[production.glow.strips]]
-title = "Box1"
+name = "box1-left"
 start = 0
-stop = 37
-colors = ["green", "yellow", "red"]
-
-  [[production.glow.strips.effects]]
-  name = "wheel"
-  offset=3
-
-[[production.glow.strips]]
-title = "Box2"
-start = 37
-stop = 74
-colors = ["none"]
+stop = 8
+colors = []
 
   [[production.glow.strips.effects]]
   name = "colored_wheel"
-  colors = ["green", "yellow"]
+  colors = ["none", "white"]
+  ncolors = 1
+  converge = false
 
   [[production.glow.strips.effects]]
   name = "breath_dim"
-  step = 5
+  step = 1
+
+[[production.glow.strips]]
+name = "box1-bottom"
+start = 8
+stop = 38
+colors = []
+
+  [[production.glow.strips.effects]]
+  name = "colored_mirror"
+  # colors = ["none", "white", "none", "white", "white", "none", "white", "white", "white", "white", "none", "none", "none", "none", 'none', 'none', 'none', 'none', 'white', 'white', 'white', 'white', 'none', 'white', 'white', 'none', 'white', 'none']
+  colors = ["none", "cyan", "none", "cyan", "cyan", "none", "cyan", "cyan", "cyan", "cyan", "none", "none", "none", "none", 'none', 'none', 'none', 'none', 'cyan', 'cyan', 'cyan', 'cyan', 'none', 'cyan', 'cyan', 'none', 'cyan', 'none']
+  ncolors = 1
+  converge = false
+
+
+# [[production.glow.strips]]
+# name = "box1-right"
+# start = 36
+# stop = 44
+# colors = []
+
+#   [[production.glow.strips.effects]]
+#   name = "colored_wheel"
+#   colors = ["none", "none", "none", "none", "none", "none", "white", "white"]
+#   ncolors = 1
+#   clockwise = false
+
+# [[production.glow.strips]]
+# name = "box1-top"
+# start = 46
+# stop = 74
+# colors = []
+
+#   [[production.glow.strips.effects]]
+#   name = "colored_mirror"
+#   colors = ["none", "white", "none", "white", "white", "none", "white", "white", "white", "white", "none", "none", "none", "none", 'none', 'none', 'none', 'none', 'white', 'white', 'white', 'white', 'none', 'white', 'white', 'none', 'white', 'none']
+#   ncolors = 1
+#   converge = false

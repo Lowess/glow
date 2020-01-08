@@ -1,0 +1,136 @@
+{% extends "layout.html" %}
+
+{% macro render_strip_card(strip)%}
+<div class="card">
+  <div class="row">
+    <div class="col-md-12">
+      {% for pixel in strip.strip.getPixels() %}
+      <i class="plug-icon fa fa-square" style="{{ 'color: #' + pixel | to_hex }}"></i>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="row no-gutters">
+    <div class="col-md-12">
+      <div class="card-body">
+        <h5 class="card-title">{{ strip.name }}</h5>
+        <p class="card-text">
+          <p class="card-text">
+            <i class="fa fa-magic"></i> Effects:
+            <ul>
+              {% for effect in strip._effects %}
+              <li>{{ effect._name }}</li>
+              {% endfor %}
+            </ul>
+          </p>
+          <p class="card-text"><small class="text-muted">Size {{ strip | length }} pixels</small></p>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-sm btn-secondary active">
+          <input type="radio" name="options" id="option1" checked> Sleep
+        </label>
+        <label class="btn btn-sm btn-secondary">
+          <input type="radio" name="options" id="option2"> On
+        </label>
+        <label class="btn btn-sm btn-secondary">
+          <input type="radio" name="options" id="option3"> Effect
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
+{% include 'header.html' %}
+
+{% block content %}
+<!-- Page Content -->
+<div class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8  offset-md-2">
+        {% for strip in strips %}
+        {{ render_strip_card(strip) }}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+
+  {% include 'footer.html' %}
+
+  {% block javascript %}
+  {{ super() }}
+  <script>
+    $(document).ready(function () {
+
+      function initTheme(theme = null) {
+        if (theme == null) {
+          theme = getCookie("kube-theme");
+        }
+        themes = {
+          "default": "Default",
+          "pastel": "Pastel",
+          "dark": "Dark"
+        }
+        console.log("Init theme " + theme);
+        $("#theme-label").text(themes[theme]);
+        $("#theme-label").attr("data-theme", theme);
+        $("body").attr("data-theme", theme);
+      }
+
+      initTheme();
+
+      function setCookie(key, value, expiry) {
+        var expires = new Date();
+        expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 1000));
+        document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+      }
+
+      function getCookie(key) {
+        var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+        return keyValue ? keyValue[2] : null;
+      }
+
+      function eraseCookie(key) {
+        var keyValue = getCookie(key);
+        setCookie(key, keyValue, '-1');
+      }
+
+      // Deals with checkbox enabled / disabled
+      $('.plug').click(function () {
+        var plug_id = ($(this).attr('id'));
+        if ($("#" + plug_id).attr("data-on") == "true") {
+          $("#" + plug_id).attr("data-on", false);
+        } else {
+          $("#" + plug_id).attr("data-on", true);
+        }
+
+        var endpoint = $("#" + plug_id).attr("data-endpoint");
+        var state = $("#" + plug_id).attr("data-on");
+
+        console.log('Click on ' + plug_id + ' switched to state ' + state);
+
+        // Make Ajax call
+        $.post(endpoint,
+          { "state": (state == "true" ? "on" : "off") })
+          .done(function (data) {
+            console.log("Data Loaded: " + data);
+          });;
+      });
+
+
+      $("#theme-dropdown a").click(function () {
+        // Update autorefresh settings
+        var theme = $(this).attr("data-theme");
+        initTheme(theme);
+        console.log("Theme was set to " + theme);
+        setCookie("kube-theme", theme);
+      });
+    });
+  </script>
+  {% endblock %}

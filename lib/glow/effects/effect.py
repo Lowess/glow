@@ -7,7 +7,7 @@ from typing import List
 
 from glow.typing import PixelListType
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 class Effect(metaclass=ABCMeta):
@@ -17,11 +17,17 @@ class Effect(metaclass=ABCMeta):
         self._offsets = None
         self._brightness = None
 
+    def __str__(self):
+        return "{} (pixels={}, offsets={}, brightness={})".format(
+            self._name.capitalize(), self._pixels, self._offsets, self._brightness
+        )
+
     def _initialize(self, pixels: PixelListType) -> None:
         self._pixels = list(pixels)
-        self._offsets = list()
-        for i, _ in enumerate(self._pixels):
-            self._offsets.append(i)
+        if self._offsets is None:
+            self._offsets = list()
+            for i, _ in enumerate(self._pixels):
+                self._offsets.append(i)
 
     @property
     def pixels(self):
@@ -41,8 +47,8 @@ class Effect(metaclass=ABCMeta):
         pass
 
     def apply(self, pixels: PixelListType) -> PixelListType:
-        if self._pixels is None:
-            self._initialize(pixels)
+        # if self._pixels is None:
+        self._initialize(pixels)
 
         self.colorize()
         brightness = self.dim()
@@ -56,5 +62,4 @@ class Effect(metaclass=ABCMeta):
         for offset in self._offsets:
             new_pixels.append(self._pixels[offset])
 
-        logger.info("New pixels after effect apply: {}".format(new_pixels))
         return (new_pixels, brightness)

@@ -5,7 +5,7 @@ import logging
 
 from glow.effects.dim_effect import DimEffect
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 class BreathDimEffect(DimEffect):
@@ -27,14 +27,8 @@ class BreathDimEffect(DimEffect):
         # If smooth play tick tock effect with clockwise
         if self._smooth:
             if new_brightness < 0 or new_brightness > 255:
-                self._clockwise = not self._clockwise
+                self._clockwise = self._clockwise * -1
 
-            logger.debug(
-                "Smooth mode - swapping clockwise -> {} ||| {}".format(
-                    self._brightness,
-                    self._brightness + ((2 * self._step) * self._clockwise),
-                )
-            )
             self._brightness = self._brightness + ((2 * self._step) * self._clockwise)
 
         else:

@@ -5,7 +5,7 @@ import logging
 
 from glow.effects.effect import Effect
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 class DimEffect(Effect):

@@ -1,0 +1,32 @@
+{% block footer %}
+<footer class="fixed-bottom">
+  <div class="container">
+    <hr />
+    <div class="row">
+      <div class="col-12 text-center">
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="{{ url_for('dashboard.display') }}">Home</a></li>
+          <li class="list-inline-item footer-menu-divider">&sdot;</li>
+          <li class="list-inline-item dropdown">
+            <a id="theme-label" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+              data-toggle="dropdown" data-theme="default" aria-haspopup="true" aria-expanded="false">
+              Default
+            </a>
+            <div id="theme-dropdown" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" data-theme="dark" href="#">Dark</a>
+              <a class="dropdown-item" data-theme="pastel" href="#">Pastel</a>
+              <a class="dropdown-item" data-theme="default" href="#">Default</a>
+            </div>
+          </li>
+          </li>
+          <li class="list-inline-item footer-menu-divider">&sdot;</li>
+          <li class="list-inline-item"><a href="{{ url_for('dashboard.display') }}">Stats</a></li>
+        </ul>
+      </div>
+      <div class="col-12 text-center">
+        <p class="text-muted small">Glow - by 110'Lab <i class="fa fa-flask"></i></p>
+      </div>
+    </div>
+  </div>
+</footer>
+{% endblock %}
