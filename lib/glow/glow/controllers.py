@@ -7,36 +7,46 @@
  Display endpoint of the application
 """
 
-from datetime import datetime
+import logging
 
 # Import flask dependencies
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 
-from glow import STRIPS
+from glow import scheduler, strip_manager
 
 # Define a blueprint
 glow = Blueprint("glow", __name__, url_prefix="/glow")
 
+logger = logging.getLogger(__name__)
 
-@glow.route("", methods=["GET"])
-def show():
+
+@glow.route("/", methods=["GET"])
+def json():
+    return jsonify(strips=strip_manager.to_json())
+
+
+@glow.route("", methods=["POST"])
+def schedule():
     """
-        Returns a simple JSON string when the application is healthy.
-
-        :returns: json -- A JSON with the following format:
-        ``{"status": "success",
-           "msg": "Glow is glowing",
-           "time": "<datetime.now()>"}``
+        Schedule a glow strip to periodically run rendering steps.
     """
-    # app.logger.debug(STRIPS)
+    if request.method == "POST":
+        payload = request.get_json(force=True)
+        logger.debug(payload)
+        state = payload["state"]
+        strip = payload["strip"]
 
-    strips = []
+        for gstrip in strip_manager.strips:
+            logger.info(f"{gstrip.name} - {strip}")
+            if gstrip.name == strip:
+                if state == "on":
+                    scheduler.add_job(
+                        id=gstrip.name,
+                        func=gstrip.render,
+                        trigger="interval",
+                        seconds=1,
+                    )
+                elif state == "on":
+                    scheduler.remove_job(id=gstrip.name)
 
-    for gstrip in STRIPS:
-        gstrip.render()
-        if len(strips) == 0:
-            strips.append(gstrip.strip.getPixels())
-
-    return jsonify(
-        status="success", msg="Glow is glowing", time=str(datetime.now()), strips=strips
-    )
+        return jsonify(status="success", msg="{} is {}".format(strip, state))

@@ -1,61 +1,52 @@
 [default]
-# Neopixel
-neopixel_size = 24
-neopixel_pin = 10 # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
-neopixel_freq_hz = 800000 # LED signal frequency in hertz (usually 800khz)
-neopixel_dma = 10 # DMA channel to use for generating signal (try 10)
-neopixel_brightness = 255 # Set to 0 for darkest and 255 for brightest
-neopixel_invert = false # True to invert the signal (when using NPN transistor level shift)
-neopixel_channel = 0 # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
 ## Logging
-[default.logging]
-version = 1
-disable_existing_loggers = false
+logging.version = 1
+logging.disable_existing_loggers = true
+logging.formatters.normal.format = "[%(asctime)s - %(name)s:%(lineno)d] - %(levelname)7s - %(message)s"
+logging.handlers.console.class = "logging.StreamHandler"
+logging.handlers.console.formatter = "normal"
+logging.handlers.console.level = "DEBUG"
+logging.handlers.console.stream = "ext://sys.stdout"
+logging.root.handlers = ["console"]
+logging.root.level = "ERROR"
+logging.loggers.app.level = "WARNING"
+logging.loggers.glow.level = "DEBUG"
 
-[default.logging.formatters]
-normal.format = "%(asctime)s [%(levelname)5s] (%(name)s:%(lineno)s) %(message)s"
+[[default.glow.lights]]
+uid = 1
+name = "TV"
+pin = 17
 
-[default.logging.handlers]
-console.class = "logging.StreamHandler"
-console.formatter = "normal"
-console.level = "DEBUG"
-console.stream = "ext://sys.stdout"
+[default.glow.neopixel]
 
-[default.logging.root]
-handlers = ["console"]
-level = "ERROR"
-
-[default.logging.loggers.glow]
-handlers = ["console"]
-level = "DEBUG"
+# Neopixel
+size = 24
+pin = 10 # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
+freq_hz = 800000 # LED signal frequency in hertz (usually 800khz)
+dma = 10 # DMA channel to use for generating signal (try 10)
+brightness = 255 # Set to 0 for darkest and 255 for brightest
+invert = false # True to invert the signal (when using NPN transistor level shift)
+channel = 0 # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
 [default.glow.patterns.zen]
-
 
 
 [[default.glow.strips]]
 name = "Box1"
 start = 0
-stop = 24
+stop = 12
 colors = ["green", "red", "yellow", "yellow", "red", "green"]
-fill = false
+fill = true
 delay = 0.3
 
   [[default.glow.strips.effects]]
   name = "colored_mirror"
-  colors = ["blue", "orange"]
+  colors = ["blue", "orange", "cyan", "yellow"]
 
-  # converge = false
-  # ncolors = 3
-  # offset = 1
-
-  # [[default.glow.strips.effects]]
-  # name = "colored_mirror"
-  # colors = ["orange", "blue"]
-  # converge = false
-  # ncolors = 3
-  # offset = 1
+  converge = false
+  ncolors = 1
+  offset = 2
 
   # [[default.glow.strips.effects]]
   # name = "dim"
@@ -65,10 +56,10 @@ delay = 0.3
 # start = 20
 # stop = 24
 # colors = ["red", "red", "blue", "blue", "green", "green"]
-#   # [[default.glow.strips.effects]]
-#   # name = "wheel"
-#   # offset = 1
-#   # clockwise = true
+#   [[default.glow.strips.effects]]
+#   name = "wheel"
+#   offset = 1
+#   clockwise = true
 
 #   [[default.glow.strips.effects]]
 #   name = "colored_wheel"
@@ -80,8 +71,10 @@ delay = 0.3
 #######################################################################################
 
 [production]
-neopixel_size = 74
 logging__loggers__glow__level = "WARNING"
+
+[production.glow.neopixel]
+size = 74
 
 [[production.glow.strips]]
 name = "box1-left"
@@ -92,12 +85,12 @@ colors = []
   [[production.glow.strips.effects]]
   name = "colored_wheel"
   colors = ["none", "white"]
-  ncolors = 1
+  ncolors = 2
   converge = false
 
-  [[production.glow.strips.effects]]
-  name = "breath_dim"
-  step = 1
+  # [[production.glow.strips.effects]]
+  # name = "breath_dim"
+  # step = 1
 
 [[production.glow.strips]]
 name = "box1-bottom"
@@ -113,17 +106,17 @@ colors = []
   converge = false
 
 
-# [[production.glow.strips]]
-# name = "box1-right"
-# start = 36
-# stop = 44
-# colors = []
+[[production.glow.strips]]
+name = "box1-right"
+start = 38
+stop = 46
+colors = []
 
-#   [[production.glow.strips.effects]]
-#   name = "colored_wheel"
-#   colors = ["none", "none", "none", "none", "none", "none", "white", "white"]
-#   ncolors = 1
-#   clockwise = false
+  [[production.glow.strips.effects]]
+  name = "colored_wheel"
+  colors = ["none", "white"]
+  ncolors = 2
+  clockwise = true
 
 # [[production.glow.strips]]
 # name = "box1-top"

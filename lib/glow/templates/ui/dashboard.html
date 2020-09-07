@@ -4,40 +4,40 @@
 <div class="card">
   <div class="row">
     <div class="col-md-12">
-      {% for pixel in strip.strip.getPixels() %}
+      {% for pixel in strip.strip.getPixels()[:17] %}
       <i class="plug-icon fa fa-square" style="{{ 'color: #' + pixel | to_hex }}"></i>
       {% endfor %}
     </div>
   </div>
   <div class="row no-gutters">
-    <div class="col-md-12">
+    <div class="col-sm-12">
       <div class="card-body">
         <h5 class="card-title">{{ strip.name }}</h5>
         <p class="card-text">
           <p class="card-text">
-            <i class="fa fa-magic"></i> Effects:
+            <!-- <i class="fa fa-magic"></i> Effects:
             <ul>
               {% for effect in strip._effects %}
               <li>{{ effect._name }}</li>
               {% endfor %}
             </ul>
+          </p> -->
+            <p class="card-text"><small class="text-muted">Size {{ strip | length }} pixels</small></p>
           </p>
-          <p class="card-text"><small class="text-muted">Size {{ strip | length }} pixels</small></p>
-        </p>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <div class="col-sm-12">
+      <div id="glow-{{ strip.name }}" name="{{ strip.name }}" class="btn-group btn-group-toggle glow-action"
+        data-toggle="buttons">
         <label class="btn btn-sm btn-secondary active">
-          <input type="radio" name="options" id="option1" checked> Sleep
+          <input type="radio" name="{{ strip.name }}" id="glow-{{ strip.name }}-sleep" data-state="sleep" checked />
+          Sleep
         </label>
         <label class="btn btn-sm btn-secondary">
-          <input type="radio" name="options" id="option2"> On
+          <input type="radio" name="{{ strip.name }}" id="glow-{{ strip.name }}-on" data-state="on" /> On
         </label>
         <label class="btn btn-sm btn-secondary">
-          <input type="radio" name="options" id="option3"> Effect
+          <input type="radio" name="{{ strip.name }}" id="glow-{{ strip.name }}-effect" data-state="glow" /> Glow
         </label>
       </div>
     </div>
@@ -70,7 +70,7 @@
 
       function initTheme(theme = null) {
         if (theme == null) {
-          theme = getCookie("kube-theme");
+          theme = getCookie("glow-theme");
         }
         themes = {
           "default": "Default",
@@ -102,25 +102,22 @@
       }
 
       // Deals with checkbox enabled / disabled
-      $('.plug').click(function () {
-        var plug_id = ($(this).attr('id'));
-        if ($("#" + plug_id).attr("data-on") == "true") {
-          $("#" + plug_id).attr("data-on", false);
-        } else {
-          $("#" + plug_id).attr("data-on", true);
-        }
+      $(document).on('change', '.glow-action input:radio[id^="glow-"]', function () {
+        console.log($(this).data("state"));
 
-        var endpoint = $("#" + plug_id).attr("data-endpoint");
-        var state = $("#" + plug_id).attr("data-on");
-
-        console.log('Click on ' + plug_id + ' switched to state ' + state);
-
-        // Make Ajax call
-        $.post(endpoint,
-          { "state": (state == "true" ? "on" : "off") })
-          .done(function (data) {
-            console.log("Data Loaded: " + data);
-          });;
+        $.post("/glow",
+          JSON.stringify({
+            strip: this.name,
+            state: $(this).data("state")
+          }),
+          function () {
+            alert("Ok");
+          },
+          'json'
+        ).fail(function (data) {
+          console.log("Error while calling /glow endpoint:");
+          console.log(data);
+        });
       });
 
 
@@ -129,7 +126,7 @@
         var theme = $(this).attr("data-theme");
         initTheme(theme);
         console.log("Theme was set to " + theme);
-        setCookie("kube-theme", theme);
+        setCookie("glow-theme", theme);
       });
     });
   </script>

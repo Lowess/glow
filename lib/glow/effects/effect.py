@@ -22,6 +22,14 @@ class Effect(metaclass=ABCMeta):
             self._name.capitalize(), self._pixels, self._offsets, self._brightness
         )
 
+    def to_json(self):
+        return {
+            "name": self._name,
+            "pixels": self._pixels,
+            "offsets": self._offsets,
+            "brightness": self._brightness,
+        }
+
     def _initialize(self, pixels: PixelListType) -> None:
         self._pixels = list(pixels)
         if self._offsets is None:

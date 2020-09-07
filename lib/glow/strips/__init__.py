@@ -4,6 +4,7 @@
 import logging
 
 from glow.strips.factory import StripFactory
+from glow.strips.manager import StripManager
 from glow.strips.glow_strip import GlowStrip
 
 logger = logging.getLogger()
@@ -19,4 +20,4 @@ except ImportError:
     )
     from glow.strips.stdout_strip import StdoutPixelStrip as PixelStrip
 
-__all__ = ["GlowStrip", "PixelStrip", "StripFactory"]
+__all__ = ["GlowStrip", "PixelStrip", "StripFactory", "StripManager"]

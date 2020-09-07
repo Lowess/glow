@@ -2,11 +2,18 @@
 # -*- coding: utf-8 -*-
 
 import logging
+from enum import Enum
 from time import sleep
 
 from glow.colors import palette
 
 logger = logging.getLogger(__name__)
+
+
+class GlowMode(Enum):
+    ON = "ON"
+    OFF = "OFF"
+    SLEEP = "SLEEP"
 
 
 class GlowStrip:
@@ -32,6 +39,15 @@ class GlowStrip:
     def __len__(self):
         return self._slice.stop - self._slice.start
 
+    def to_json(self):
+        return {
+            "name": self.name,
+            # "strip": str(self.strip),
+            "start": self.start,
+            "stop": self.stop,
+            "effects": [e.to_json() for e in self.effects],
+        }
+
     @property
     def name(self):
         return self._name
@@ -48,12 +64,23 @@ class GlowStrip:
     def stop(self):
         return self._slice.stop
 
+    @property
+    def effects(self):
+        return self._effects
+
     def off(self):
+        """Switch off the strip."""
         for i in range(int(self.start), int(self.stop)):
             self._strip.setPixelColor(i, palette["none"])
         self._strip.show()
 
     def colorize(self, color, start=None, stop=None):
+        """
+            Colorize strip leds with `color` from `start` to `stop`.
+            By default the whole strip will be colorized if `start and `stop`
+            remain `None`.
+        """
+
         if start is None:
             start = self.start
         if stop is None:
@@ -109,10 +136,3 @@ class GlowStrip:
                 self.dim(brightness=new_brightness)
 
             sleep(self._delay)
-        # TODO: If two effects run on the full glow strip
-        # new_pixels end up being twice the size. Need to come up
-        # with a merge strategy or handle that gracefully
-
-        # logger.info("New pixels len {}".format(len(new_pixels) - len(self)))
-        # self.paint(new_pixels[(len(new_pixels) - len(self)) : len(new_pixels)])
-        # self._strip.show()

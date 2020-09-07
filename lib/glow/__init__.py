@@ -9,32 +9,48 @@ from logging.config import dictConfig
 
 from flask import Flask, url_for, redirect, render_template, send_from_directory
 from dynaconf import LazySettings
+from flask_cors import CORS
+from flask_apscheduler import APScheduler
+from apscheduler.schedulers import SchedulerAlreadyRunningError
 
+from glow.light import Light, LightManager
 from glow.colors import palette
-from glow.strips import GlowStrip, StripFactory
+from glow.strips import GlowStrip, StripFactory, StripManager
 from glow.effects import EffectFactory
 
-STRIPS = []
+# from glow.scheduler import init_scheduler
+light_manager = LightManager()
+strip_manager = StripManager()
+scheduler = APScheduler()
+# init_scheduler(scheduler)
+
+# Configure Dynaconf
+settings = LazySettings(
+    ENVVAR_PREFIX_FOR_DYNACONF="GLOW", ENVVAR_FOR_DYNACONF="GLOW_SETTINGS"
+)
+
+# Initialize logging
+dictConfig(settings.LOGGING)
+logger = logging.getLogger(__name__)
 
 
 def create_app():
 
     app = Flask(__name__)
-
-    # Configure Dynaconf
-    settings = LazySettings(
-        ENVVAR_PREFIX_FOR_DYNACONF="GLOW", ENVVAR_FOR_DYNACONF="GLOW_SETTINGS"
-    )
-
-    # Initialize logging
-    dictConfig(settings.LOGGING)
-    logger = logging.getLogger(__name__)
-
+    CORS(app)
     logger.info("Glow initialized with: {}".format(settings.to_dict()))
 
-    # Glow setup
-    neopixel = StripFactory.create(size=settings.NEOPIXEL_SIZE)
+    # ApsScheduler
+    try:
+        scheduler.init_app(app)
+        scheduler.start()
+    except SchedulerAlreadyRunningError:
+        pass
 
+    # Glow setup
+    neopixel = StripFactory.create(size=settings.GLOW.NEOPIXEL.SIZE)
+
+    # Strip setup
     for strip_settings in settings.GLOW["strips"]:
         logger.debug("Initializig Glow strip with: {}".format(strip_settings))
 
@@ -68,20 +84,29 @@ def create_app():
 
         gstrip.paint(colors)
 
-        STRIPS.append(gstrip)
+        strip_manager.add(gstrip)
 
-    # for gstrip in STRIPS:
+    # Light setup
+    # for light in STRIPS:
     #     logger.debug(len(gstrip))
+
+    for light in settings.GLOW["lights"]:
+        light_obj = Light(**light)
+        light_manager.add(light_obj)
 
     ################################################################################
     # Blueprints registration
     ################################################################################
 
     from glow.glow import glow
-    from glow.dashboard import dashboard
+    from glow.ui import ui
+    from glow.config import config
+    from glow.light.controllers import light
 
     app.register_blueprint(glow)
-    app.register_blueprint(dashboard)
+    app.register_blueprint(light)
+    app.register_blueprint(ui)
+    app.register_blueprint(config)
 
     @app.template_filter()
     def to_hex(decimal):
@@ -89,7 +114,7 @@ def create_app():
 
     @app.route("/", methods=["GET"])
     def index(error=None):
-        return redirect(url_for("glow.show"))
+        return redirect(url_for("ui.display"))
 
     @app.route("/favicon.ico")
     def favicon():
@@ -100,7 +125,7 @@ def create_app():
         )
 
     def cleanup():
-        for gstrip in STRIPS:
+        for gstrip in strip_manager.strips:
             gstrip.off()
 
     atexit.register(cleanup)
