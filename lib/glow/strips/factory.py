@@ -12,12 +12,12 @@ except ImportError:
 class StripFactory:
     @staticmethod
     def create(size, name="neopixel"):
-        pin = settings.GLOW.NEOPIXEL.PIN
-        freq_hz = settings.GLOW.NEOPIXEL.FREQ_HZ
-        dma = settings.GLOW.NEOPIXEL.DMA
-        invert = settings.GLOW.NEOPIXEL.INVERT
-        brightness = settings.GLOW.NEOPIXEL.BRIGHTNESS
-        channel = settings.GLOW.NEOPIXEL.CHANNEL
+        pin = settings["glow"]["neopixel"]["pin"]
+        freq_hz = settings["glow"]["neopixel"]["freq_hz"]
+        dma = settings["glow"]["neopixel"]["dma"]
+        invert = settings["glow"]["neopixel"]["invert"]
+        brightness = settings["glow"]["neopixel"]["brightness"]
+        channel = settings["glow"]["neopixel"]["channel"]
 
         strip = None
         if name.lower() == "neopixel":

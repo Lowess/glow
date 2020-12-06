@@ -48,10 +48,10 @@ def create_app():
         pass
 
     # Glow setup
-    neopixel = StripFactory.create(size=settings.GLOW.NEOPIXEL.SIZE)
+    neopixel = StripFactory.create(size=settings["glow"]["neopixel"]["size"])
 
     # Strip setup
-    for strip_settings in settings.GLOW["strips"]:
+    for strip_settings in settings["glow"]["strips"]:
         logger.debug("Initializig Glow strip with: {}".format(strip_settings))
 
         # Build the list of effects based on provided settings
@@ -90,7 +90,7 @@ def create_app():
     # for light in STRIPS:
     #     logger.debug(len(gstrip))
 
-    for light in settings.GLOW["lights"]:
+    for light in settings["glow"]["lights"]:
         light_obj = Light(**light)
         light_manager.add(light_obj)
 

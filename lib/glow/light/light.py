@@ -10,8 +10,8 @@ except ImportError:
 
 
 class LightState(Enum):
-    ON = True
-    OFF = False
+    ON = False
+    OFF = True
 
 
 class Light(object):
