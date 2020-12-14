@@ -11,7 +11,6 @@ import logging
 
 # Import flask dependencies
 from flask import Blueprint, jsonify, request
-
 from glow import scheduler, strip_manager
 
 # Define a blueprint

@@ -1,22 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
-import math
 import atexit
 import logging
+import math
+import os
 from logging.config import dictConfig
 
-from flask import Flask, url_for, redirect, render_template, send_from_directory
-from dynaconf import LazySettings
-from flask_cors import CORS
-from flask_apscheduler import APScheduler
 from apscheduler.schedulers import SchedulerAlreadyRunningError
-
-from glow.light import Light, LightManager
+from dynaconf import LazySettings
+from flask import Flask, redirect, render_template, send_from_directory, url_for
+from flask_apscheduler import APScheduler
+from flask_cors import CORS
 from glow.colors import palette
-from glow.strips import GlowStrip, StripFactory, StripManager
 from glow.effects import EffectFactory
+from glow.light import Light, LightManager
+from glow.strips import GlowStrip, StripFactory, StripManager
 
 # from glow.scheduler import init_scheduler
 light_manager = LightManager()
@@ -98,10 +97,10 @@ def create_app():
     # Blueprints registration
     ################################################################################
 
-    from glow.glow import glow
-    from glow.ui import ui
     from glow.config import config
+    from glow.glow import glow
     from glow.light.controllers import light
+    from glow.ui import ui
 
     app.register_blueprint(glow)
     app.register_blueprint(light)

@@ -3,7 +3,6 @@
 
 # Import flask dependencies
 from flask import Blueprint, render_template
-
 from glow import strip_manager
 
 # Define a blueprint

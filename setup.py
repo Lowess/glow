@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 import os
 import sys
 
 # Setup requirements
 try:
-    from setuptools import setup, find_packages
+    from setuptools import find_packages, setup
     from setuptools.command.install import install
 except ImportError:
     print(
@@ -78,7 +77,7 @@ EXTRAS_REQUIRE["dev"] = (
 static_setup_params = dict(
     name="glow",
     version="0.0.1",
-    description=("A Flask Webapp"),
+    description=("Make things Glow"),
     keywords="python",
     author="__author__",
     author_email="__email__",

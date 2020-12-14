@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 # Import flask dependencies
-from flask import Blueprint, jsonify, request
+from flask import Blueprint
 from flask import current_app as app
-
+from flask import jsonify, request
 from glow import light_manager
 
 # Define a blueprint

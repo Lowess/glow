@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 from colors import color
-
 from glow.colors import Color
 
 
@@ -67,7 +65,7 @@ class StdoutPixelStrip(object):
 
         for i, _ in enumerate(self._leds):
             c = self.getPixelColorRGB(i)
-            display.append(color("▢".format(idx=i), bg=(c.r, c.g, c.b)))
+            display.append(color("▢", bg=(c.r, c.g, c.b)))
 
         return "|" + "|".join(display) + "|"
 

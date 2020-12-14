@@ -4,13 +4,13 @@
 import logging
 
 from glow.colors import palette
+from glow.effects.breath_dim_effect import BreathDimEffect
+from glow.effects.colored_mirror_effect import ColoredMirrorEffect
+from glow.effects.colored_wheel_effect import ColoredWheelEffect
 from glow.effects.dim_effect import DimEffect
-from glow.effects.wheel_effect import WheelEffect
 from glow.effects.mirror_effect import MirrorEffect
 from glow.effects.ncolor_effect import NColorEffect
-from glow.effects.breath_dim_effect import BreathDimEffect
-from glow.effects.colored_wheel_effect import ColoredWheelEffect
-from glow.effects.colored_mirror_effect import ColoredMirrorEffect
+from glow.effects.wheel_effect import WheelEffect
 
 logger = logging.getLogger(__name__)
 

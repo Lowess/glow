@@ -7,8 +7,8 @@
   Usage: -c 'python:harvest.gunicorn'
 """
 
-from os import environ
 from multiprocessing import cpu_count
+from os import environ
 
 bind = "0.0.0.0:" + environ.get("HARVEST_PORT", "5000")
 preload_app = True

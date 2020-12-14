@@ -3,8 +3,8 @@
 
 import logging
 
-from glow.effects.wheel_effect import WheelEffect
 from glow.effects.ncolor_effect import NColorEffect
+from glow.effects.wheel_effect import WheelEffect
 
 logger = logging.getLogger(__name__)
 

@@ -1,20 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-"""TODO."""
-
+import logging
 import os
 import time
-import logging
 
 from apscheduler.triggers.interval import IntervalTrigger
+
+"""TODO."""
 
 logger = logging.getLogger(__name__)
 
 
 def scheduler_status(time):
     _time = time
-    logger.info("Tracker is: {}".format(time=_time))
+    logger.info(f"Tracker is: {_time}")
 
 
 def init_jobs(scheduler):

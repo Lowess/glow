@@ -3,7 +3,6 @@
 
 # Import flask dependencies
 from flask import Blueprint, jsonify
-
 from glow import settings
 
 # Define a blueprint

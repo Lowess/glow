@@ -4,8 +4,8 @@
 import logging
 
 from glow.strips.factory import StripFactory
-from glow.strips.manager import StripManager
 from glow.strips.glow_strip import GlowStrip
+from glow.strips.manager import StripManager
 
 logger = logging.getLogger()
 
