@@ -90,7 +90,7 @@ static_setup_params = dict(
     license="GNU GPLv3",
     install_requires=[
         "ansicolors>=1.1.8",
-        "dynaconf>2.2,<3.0",
+        "dynaconf>3.1,<3.2",
         "Flask-APScheduler>=1.11.0",
         "flask-cors==3.0.8",
         "Flask>1.0",
@@ -101,6 +101,7 @@ static_setup_params = dict(
     extras_require=EXTRAS_REQUIRE,
     test_suite="test",
     cmdclass={"verify": VerifyVersionCommand},
+    include_package_data=True,
 )
 
 

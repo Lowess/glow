@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 import atexit
 import logging
 import math
@@ -8,11 +7,11 @@ import os
 from logging.config import dictConfig
 
 from apscheduler.schedulers import SchedulerAlreadyRunningError
-from dynaconf import LazySettings
 from flask import Flask, redirect, render_template, send_from_directory, url_for
 from flask_apscheduler import APScheduler
 from flask_cors import CORS
 from glow.colors import palette
+from glow.conf import settings
 from glow.effects import EffectFactory
 from glow.light import Light, LightManager
 from glow.strips import GlowStrip, StripFactory, StripManager
@@ -22,11 +21,6 @@ light_manager = LightManager()
 strip_manager = StripManager()
 scheduler = APScheduler()
 # init_scheduler(scheduler)
-
-# Configure Dynaconf
-settings = LazySettings(
-    ENVVAR_PREFIX_FOR_DYNACONF="GLOW", ENVVAR_FOR_DYNACONF="GLOW_SETTINGS"
-)
 
 # Initialize logging
 dictConfig(settings.LOGGING)

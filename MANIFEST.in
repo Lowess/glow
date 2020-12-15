@@ -1,0 +1,3 @@
+include lib/glow/settings.toml
+graft lib/glow/static
+graft lib/glow/templates

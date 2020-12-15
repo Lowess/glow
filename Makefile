@@ -2,6 +2,8 @@
 
 .PHONY: dev tests lint checkstyle coverage docs
 
+build:
+	python setup.py sdist
 run:
 	@echo 🚀 Starting application...
 	FLASK_ENV=development FLASK_APP=lib/glow flask run -h 0.0.0.0

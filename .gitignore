@@ -91,3 +91,6 @@ ENV/
 
 # Sphinx
 docs/sphinx/_build
+
+# Ignore dynaconf secret files
+lib/glow/.secrets.*

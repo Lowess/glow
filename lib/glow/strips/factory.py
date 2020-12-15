@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-from dynaconf import settings
+from glow.conf import settings
 
 try:
     from rpi_ws281x import PixelStrip

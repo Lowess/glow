@@ -3,7 +3,7 @@
 
 # Import flask dependencies
 from flask import Blueprint, jsonify
-from glow import settings
+from glow.conf import settings
 
 # Define a blueprint
 config = Blueprint("config", __name__, url_prefix="/config")
